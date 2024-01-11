@@ -43,7 +43,6 @@ function stopwatch() {
     timer = setTimeout(stopwatch, 1000)
 }
 
-
 document.querySelectorAll('.tabsItem').forEach(function(element) {
     element.addEventListener('click', function() {
         document.querySelectorAll('.tabsItem').forEach(function(item) {
@@ -54,4 +53,41 @@ document.querySelectorAll('.tabsItem').forEach(function(element) {
         document.querySelector('.clock').classList.toggle('active', tabText == 'часы')
         document.querySelector('.stopwatch').classList.toggle('active', tabText == 'секундомер')
     })
+})
+
+const hour = document.querySelector('.h'),
+    min = document.querySelector('.m'),
+    sec = document.querySelector('.s')
+
+let s = 354
+
+function formatTime(time) {
+    return time < 10 ? `0${time}` : time
+}
+
+function clock() {
+    const time = new Date()
+    const hours = time.getHours() * 30
+    const minutes = time.getMinutes() * 6
+    const seconds = time.getSeconds() * 6
+    hour.style = `transform: rotate(${hours}deg);`
+    min.style = `transform: rotate(${minutes}deg);`
+    if (seconds == 354  || s > 354) {
+        s += 6
+        sec.style = `transform: rotate(${s}deg); transition: 1s linear;`
+    } else {
+        sec.style = `transform: rotate(${seconds}deg); transition: 1s linear;`
+    }
+    document.querySelector('.hours').textContent = formatTime(hours / 30)
+    document.querySelector('.minutes').textContent = formatTime(minutes / 6)
+    setTimeout(clock, 1000)
+}
+
+clock()
+
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState == "visible") {
+        sec.style = `transform: rotate(${new Date().getSeconds() * 6}deg);`;
+        s = 354
+    }
 })
