@@ -66,8 +66,8 @@ function formatTime(time) {
 function clock() {
     const time = new Date()
     const hours = time.getHours()
-    const minutes = time.getMinutes() + (hours * 60)
-    const seconds = time.getSeconds() + (time.getMinutes() * 60) + (hour * 3600)
+    const minutes = time.getMinutes() + (time.getHours() * 60)
+    const seconds = time.getSeconds() + (time.getMinutes() * 60) + (time.getHours() * 3600)
     hour.style = `transform: rotate(${hours * 30}deg); transition: 1s linear;`
     min.style = `transform: rotate(${minutes * 6}deg); transition: 1s linear;`
     sec.style = `transform: rotate(${seconds * 6}deg); transition: 1s linear;`
