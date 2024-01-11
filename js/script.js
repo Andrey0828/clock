@@ -95,3 +95,10 @@ function clock() {
 }
 
 clock()
+
+document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") {
+        h = 330
+        m = s = 354
+    }
+})
