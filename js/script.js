@@ -59,46 +59,21 @@ const hour = document.querySelector('.h'),
     min = document.querySelector('.m'),
     sec = document.querySelector('.s')
 
-let h = 330
-let m = s = 354
-
 function formatTime(time) {
     return time < 10 ? `0${time}` : time
 }
 
 function clock() {
     const time = new Date()
-    const hours = time.getHours() * 30
-    const minutes = time.getMinutes() * 6
-    const seconds = time.getSeconds() * 6
-    if (hours == 330  || h > 330) {
-        h += 30
-        hour.style = `transform: rotate(${h}deg); transition: 1s linear;`
-    } else {
-        hour.style = `transform: rotate(${hours}deg); transition: 1s linear;`
-    }
-    if (minutes == 354  || m > 354) {
-        m += 6
-        min.style = `transform: rotate(${m}deg); transition: 1s linear;`
-    } else {
-        min.style = `transform: rotate(${minutes}deg); transition: 1s linear;`
-    }
-    if (seconds == 354  || s > 354) {
-        s += 6
-        sec.style = `transform: rotate(${s}deg); transition: 1s linear;`
-    } else {
-        sec.style = `transform: rotate(${seconds}deg); transition: 1s linear;`
-    }
-    document.querySelector('.hours').textContent = formatTime(hours / 30)
-    document.querySelector('.minutes').textContent = formatTime(minutes / 6)
+    const hours = time.getHours()
+    const minutes = time.getMinutes() + (hours * 60)
+    const seconds = time.getSeconds() + (time.getMinutes() * 60) + (hour * 3600)
+    hour.style = `transform: rotate(${hours * 30}deg); transition: 1s linear;`
+    min.style = `transform: rotate(${minutes * 6}deg); transition: 1s linear;`
+    sec.style = `transform: rotate(${seconds * 6}deg); transition: 1s linear;`
+    document.querySelector('.hours').textContent = formatTime(hours)
+    document.querySelector('.minutes').textContent = formatTime(minutes % 60)
     setTimeout(clock, 1000)
 }
 
 clock()
-
-document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "visible") {
-        h = 330
-        m = s = 354
-    }
-})
