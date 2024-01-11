@@ -59,7 +59,8 @@ const hour = document.querySelector('.h'),
     min = document.querySelector('.m'),
     sec = document.querySelector('.s')
 
-let s = 354
+let h = 330
+let m = s = 354
 
 function formatTime(time) {
     return time < 10 ? `0${time}` : time
@@ -70,8 +71,18 @@ function clock() {
     const hours = time.getHours() * 30
     const minutes = time.getMinutes() * 6
     const seconds = time.getSeconds() * 6
-    hour.style = `transform: rotate(${hours}deg);`
-    min.style = `transform: rotate(${minutes}deg);`
+    if (hours == 330  || h > 330) {
+        h += 30
+        hour.style = `transform: rotate(${h}deg); transition: 1s linear;`
+    } else {
+        hour.style = `transform: rotate(${hours}deg); transition: 1s linear;`
+    }
+    if (minutes == 354  || m > 354) {
+        m += 6
+        min.style = `transform: rotate(${m}deg); transition: 1s linear;`
+    } else {
+        min.style = `transform: rotate(${minutes}deg); transition: 1s linear;`
+    }
     if (seconds == 354  || s > 354) {
         s += 6
         sec.style = `transform: rotate(${s}deg); transition: 1s linear;`
@@ -84,10 +95,3 @@ function clock() {
 }
 
 clock()
-
-document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState == "visible") {
-        sec.style = `transform: rotate(${new Date().getSeconds() * 6}deg);`;
-        s = 354
-    }
-})
