@@ -58,6 +58,7 @@ document.querySelectorAll('.tabsItem').forEach(function(element) {
 const hour = document.querySelector('.h'),
     min = document.querySelector('.m'),
     sec = document.querySelector('.s')
+let f = true
 
 function formatTime(time) {
     return time < 10 ? `0${time}` : time
@@ -68,11 +69,13 @@ function clock() {
     const hours = time.getHours()
     const minutes = time.getMinutes() + (time.getHours() * 60)
     const seconds = time.getSeconds() + (time.getMinutes() * 60) + (time.getHours() * 3600)
-    hour.style = `transform: rotate(${hours * 30}deg); transition: 1s linear;`
-    min.style = `transform: rotate(${minutes * 6}deg); transition: 1s linear;`
-    sec.style = `transform: rotate(${seconds * 6}deg); transition: 1s linear;`
+    const transitionStyle = f ? '' : 'transition: 1s linear;'
+    hour.style = `transform: rotate(${hours * 30}deg); ${transitionStyle}`
+    min.style = `transform: rotate(${minutes * 6}deg); ${transitionStyle}`
+    sec.style = `transform: rotate(${seconds * 6}deg); ${transitionStyle}`
     document.querySelector('.hours').textContent = formatTime(hours)
     document.querySelector('.minutes').textContent = formatTime(minutes % 60)
+    f = false;
     setTimeout(clock, 1000)
 }
 
